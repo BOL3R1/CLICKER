@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPS Test for 10 Seconds</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            background-color: black;
+            color: white;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        button {
+            font-size: 24px;
+            padding: 50px 100px;
+            cursor: pointer;
+            border-radius: 20px;
+            background-color: red;
+            color: #fff;
+            border: none;
+        }
+        #cpsDisplay {
+            font-size: 36px;
+            margin-top: 20px;
+            display: none;
+        }
+        #retryButton {
+            font-size: 18px;
+            margin-top: 20px;
+            cursor: pointer;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>CPS Test for 10 Seconds</h1>
+    <button id="startButton" onclick="startTest()">Start</button>
+    <button id="clickButton" style="display:none;" onclick="countClicks()">Click as fast as you can!</button>
+    <div id="cpsDisplay">Clicks per second: 0</div>
+    <button id="retryButton" onclick="retryTest()">Try Again</button>
+
+    <script>
+        var clickCount = 0;
+        var startTime = 0;
+        var timer;
+
+        function startTest() {
+            document.getElementById('startButton').style.display = 'none';
+            document.getElementById('clickButton').style.display = 'block';
+            document.getElementById('cpsDisplay').style.display = 'block';
+            startTime = new Date().getTime();
+            timer = setTimeout(endTest, 10000); // 10 seconds
+        }
+
+        function countClicks() {
+            clickCount++;
+        }
+
+        function endTest() {
+            var currentTime = new Date().getTime();
+            var elapsedTime = (currentTime - startTime) / 1000;
+            var cps = Math.round(clickCount / elapsedTime);
+            document.getElementById('cpsDisplay').innerText = 'Clicks per second: ' + cps;
+            document.getElementById('clickButton').disabled = true;
+            document.getElementById('retryButton').style.display = 'block';
+        }
+
+        function retryTest() {
+            clickCount = 0;
+            startTime = 0;
+            document.getElementById('cpsDisplay').innerText = 'Clicks per second: 0';
+            document.getElementById('clickButton').disabled = false;
+            document.getElementById('retryButton').style.display = 'none';
+            document.getElementById('startButton').style.display = 'block';
+            document.getElementById('clickButton').style.display = 'none';
+            document.getElementById('cpsDisplay').style.display = 'none';
+            clearTimeout(timer);
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
